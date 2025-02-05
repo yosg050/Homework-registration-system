@@ -3,3 +3,5 @@ azure-service-project/terraform.tfstate
 azure-service-project/terraform.tfstate.backup
 azure-service-project/.terraform.lock.hcl
 azure-service-project/terraform.tfvars
+azure-service-project/python-server/.env
+azure-service-project/python-server/venv
