@@ -1,0 +1,5 @@
+azure-service-project/.terraform/
+azure-service-project/terraform.tfstate
+azure-service-project/terraform.tfstate.backup
+azure-service-project/.terraform.lock.hcl
+azure-service-project/terraform.tfvars
