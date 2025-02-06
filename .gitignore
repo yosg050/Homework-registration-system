@@ -7,3 +7,4 @@ azure-service-project/python-server/.env
 azure-service-project/python-server/venv
 node-server/node_modules
 node-server/package-lock.json
+node-server/.env
