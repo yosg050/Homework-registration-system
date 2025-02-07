@@ -3,8 +3,12 @@ azure-service-project/terraform.tfstate
 azure-service-project/terraform.tfstate.backup
 azure-service-project/.terraform.lock.hcl
 azure-service-project/terraform.tfvars
+
 azure-service-project/python-server/.env
 azure-service-project/python-server/venv
-node-server/node_modules
-node-server/package-lock.json
-node-server/.env
+
+azure-service-project/node-server/node_modules
+azure-service-project/node-server/package-lock.json
+azure-service-project/node-server/.env  
+client_web/node_modules
+client_web/package-lock.json
