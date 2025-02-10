@@ -151,6 +151,19 @@ resource "azurerm_linux_virtual_machine" "python_server" {
       timeout     = "10m"
     }
   }
+
+  provisioner "file" {
+  source      = "C:/Users/yosef/Software Studies/Homeworks/registration-system/"
+  destination = "/home/adminuser/python-app"
+
+  connection {
+    type        = "ssh"
+    user        = "adminuser"
+    private_key = file("~/.ssh/id_rsa")
+    host        = azurerm_public_ip.python_server.ip_address
+    timeout     = "10m"
+  }
+}
 }
 
 resource "azurerm_linux_virtual_machine" "node_server" {
@@ -203,6 +216,18 @@ resource "azurerm_linux_virtual_machine" "node_server" {
       timeout     = "10m"
     }
   }
+  provisioner "file" {
+  source      = "C:/Users/yosef/Software Studies/Homeworks/registration-system/"
+  destination = "/home/adminuser/node-app"
+
+  connection {
+    type        = "ssh"
+    user        = "adminuser"
+    private_key = file("~/.ssh/id_rsa")
+    host        = azurerm_public_ip.node_server.ip_address
+    timeout     = "10m"
+  }
+}
 }
 
 output "python_server_ip" {
