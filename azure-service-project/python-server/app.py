@@ -14,7 +14,7 @@ client = MongoClient(
 )
 db = client["registration-system-HW"]
 users_collection = db["users"]
-
+nodejs_url = os.getenv("NODEJS_URL")
 try:
     client.admin.command("ping")
     print("Pinged your deployment. You successfully connected to MongoDB!")
@@ -24,7 +24,7 @@ except Exception as e:
 
 @app.route("/register", methods=["POST"])
 def register():
-    
+
     try:
         data = request.json
         email = data.get("email")
@@ -39,30 +39,51 @@ def register():
             return jsonify({"error": "Email already exists"}), 400
 
         new_user = users_collection.insert_one({"email": email, "password": password})
-       
-        nodejs_url = "10.0.1.5:5000/getMessage"
+
         response = requests.get(f"http://{nodejs_url}")
-        
+
         if new_user and new_user.acknowledged == True:
             try:
                 print(response)
                 if response.status_code == 200:
                     nodejs_response = response.json()
                     print("Response from Node.js:", nodejs_response)
-                    print("response: " , response)
-                    return jsonify({"message": "User created successfully", "sentence": nodejs_response["sentence"]}), 200
+                    print("response: ", response)
+                    return (
+                        jsonify(
+                            {
+                                "message": "User created successfully",
+                                "sentence": nodejs_response["sentence"],
+                            }
+                        ),
+                        200,
+                    )
                 else:
-                    print("response: " , response)
+                    print("response: ", response)
                     print("Failed to get response from Node.js:", response.status_code)
                     message = "Error connecting to Node.js"
-                    return jsonify({"message": "User created successfully", "sentence": message}), 200
+                    return (
+                        jsonify(
+                            {
+                                "message": "User created successfully",
+                                "sentence": message,
+                            }
+                        ),
+                        200,
+                    )
 
             except Exception as e:
                 print("Error connecting to Node.js:", str(e))
-                return jsonify({"message": "User created successfully, but error occurred"}), 200
-            
+                return (
+                    jsonify(
+                        {"message": "User created successfully, but error occurred"}
+                    ),
+                    200,
+                )
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -85,16 +106,30 @@ def login():
             print("Invalid password")
             return jsonify({"error": "Invalid credentials"}), 401
 
-
-        nodejs_url = "10.0.1.5:5000/getMessage"
         response = requests.get(f"http://{nodejs_url}")
 
         try:
             if response.status_code == 200:
                 nodejs_response = response.json()
-                return jsonify({"message": "Login successful", "sentence": nodejs_response["sentence"]}), 200
+                return (
+                    jsonify(
+                        {
+                            "message": "Login successful",
+                            "sentence": nodejs_response["sentence"],
+                        }
+                    ),
+                    200,
+                )
             else:
-                return jsonify({"message": "Login successful", "sentence": "Error connecting to Node.js"}), 200
+                return (
+                    jsonify(
+                        {
+                            "message": "Login successful",
+                            "sentence": "Error connecting to Node.js",
+                        }
+                    ),
+                    200,
+                )
 
         except Exception as e:
             print("Error connecting to Node.js:", str(e))
@@ -103,7 +138,6 @@ def login():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-    
 
 if __name__ == "__main__":
     app.run(

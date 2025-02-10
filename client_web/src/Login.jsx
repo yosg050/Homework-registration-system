@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { FaRegEye } from "react-icons/fa6";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa6";
 import { serverIp } from "./ips";
 import Popup from "./Popup";
 import axios from "axios";
+import { IoLockClosedOutline } from "react-icons/io5";
+import { MdOutlineMailOutline } from "react-icons/md";
+
 
 function Login({ setIsSignUp }) {
+  const [showPassword, setShowPassword] = useState(false);
+
   const [popupData, setPopupData] = useState({
     isOpen: false,
     title: "",
@@ -34,6 +39,10 @@ function Login({ setIsSignUp }) {
       message: message,
       color: color,
     });
+  };
+
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const isFormValid = formData.email && formData.password;
@@ -78,37 +87,42 @@ function Login({ setIsSignUp }) {
       </h2>
 
       <form className="space-y-1">
-        {/* Email Input */}
-        <div>
+
+        <div className="relative flex items-center border mt-5 border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 ">
+          <MdOutlineMailOutline className="absolute left-3 text-gray-500 text-sm" />
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
-            className="w-full px-1 py-0.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            className="w-full pl-10 pr-10  px-6 py-0.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
           />
         </div>
+        <div className="relative flex items-center border mt-5 border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 ">
+          <IoLockClosedOutline className="absolute left-3 text-gray-500 text-sm" />
 
-        {/* Password Input */}
-        <div className="relative">
           <input
-            type="password"
             name="password"
+            type={showPassword ? "text" : "password"}
             value={formData.password}
             onChange={handleChange}
             placeholder="Password"
-            className="w-full px-1 py-0.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            className="w-full pl-10 pr-10  px-6 py-0.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
           />
           <button
+            onClick={togglePassword}
             type="button"
             className="absolute right-3 top-1/2 -translate-y-1/2 "
           >
-            <FaRegEye className="text-gray-500 cursor-pointer" />
+            {showPassword ? (
+              <FaRegEyeSlash className="text-gray-500" />
+            ) : (
+              <FaRegEye className="text-gray-500" />
+            )}
           </button>
         </div>
 
-        {/* Forgot Password Link */}
         <div className="text-right">
           <a href="#" className="text-indigo-700 text-xs cursor-pointer">
             Forgot password?
@@ -118,14 +132,16 @@ function Login({ setIsSignUp }) {
 
       <button
         type="button"
-        className="w-full bg-blue-600 text-white py-1 rounded-3xl hover:bg-blue-700 transition-colors text-xs cursor-pointer"
         onClick={send}
         disabled={!isFormValid}
+        className={`w-full py-1 rounded-3xl text-white text-xs transition-colors 
+    bg-blue-600 ${
+      isFormValid ? "hover:bg-blue-700" : "opacity-50 cursor-not-allowed"
+    }`}
       >
         Log in
       </button>
 
-      {/* Or Divider */}
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300"></div>
@@ -135,7 +151,6 @@ function Login({ setIsSignUp }) {
         </div>
       </div>
 
-      {/* Social Login Buttons */}
       <div className="grid grid-cols-2 gap-2 w-full">
         <button className="flex items-center justify-center px-2 py-1 border border-blue-600 rounded-3xl hover:bg-gray-50 text-xs cursor-pointer">
           <FcGoogle className="w-4 h-4 mr-4" />
@@ -150,7 +165,6 @@ function Login({ setIsSignUp }) {
         </button>
       </div>
 
-      {/* Register Link */}
       <div className="text-center text-xs flex justify-center items-center flex-col">
         <span className="text-gray-600 m-2">Have no account yet? </span>
         <button

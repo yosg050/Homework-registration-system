@@ -55,13 +55,9 @@ function SignUp({ setIsSignUp }) {
     };
 
     try {
-      const response = await axios.post(
-        `${serverIp}/register`,
-        data,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await axios.post(`${serverIp}/register`, data, {
+        headers: { "Content-Type": "application/json" },
+      });
 
       console.log("Success:", response.data);
 
@@ -193,7 +189,12 @@ function SignUp({ setIsSignUp }) {
         type="submit"
         disabled={!isFormValid}
         onClick={send}
-        className={`w-full py-1 mt-5 text-sm rounded-3xl bg-blue-600 text-white hover:bg-blue-700 `}
+        className={`w-full py-1 mt-5 text-sm rounded-3xl text-white 
+    ${
+      isFormValid
+        ? "bg-blue-600 hover:bg-blue-700"
+        : "bg-blue-300 cursor-not-allowed"
+    }`}
       >
         Sign Up
       </button>

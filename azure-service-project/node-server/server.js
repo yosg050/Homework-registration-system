@@ -19,7 +19,6 @@ app.get("/getMessage", async (req, res) => {
     console.log("Hello");
 
     try {
-
         const response = await openai.chat.completions.create({
             model: "gpt-4o",
             store: true,

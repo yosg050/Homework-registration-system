@@ -10,8 +10,10 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import axios from "axios";
-import Popup from "./Popup"; // הוספת רכיב ה-Popup להצגת הודעות
-import { serverIp } from "./ips"; // הוספת כתובת השרת
+import Popup from "./Popup";
+import { serverIp } from "./ips";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import Feather from "@expo/vector-icons/Feather";
 
 export default function Login({ setIsSignUp }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -75,22 +77,28 @@ export default function Login({ setIsSignUp }) {
     <View style={styles.container}>
       <Text style={styles.title}>Log in</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        onChangeText={handleChange("email")}
-        value={formData.email}
-      />
+      <View style={styles.inputContainer}>
+        <Fontisto name="email" size={20} color="#666" style={styles.icon} />
+        <TextInput
+          style={styles.inputIcon}
+          placeholder="Email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          onChangeText={handleChange("email")}
+          value={formData.email}
+          textAlign="left"
+        />
+      </View>
 
       <View style={styles.passwordContainer}>
+        <Feather name="lock" size={20} color="#666" style={styles.icon} />
         <TextInput
           style={styles.inputPassword}
           placeholder="Password"
           secureTextEntry={!showPassword}
           onChangeText={handleChange("password")}
           value={formData.password}
+          textAlign="left"
         />
         <TouchableOpacity style={styles.eyeIcon} onPress={togglePassword}>
           <Ionicons
@@ -110,7 +118,11 @@ export default function Login({ setIsSignUp }) {
         style={[styles.button, !isFormValid && styles.buttonDisabled]}
         onPress={send}
       >
-        <Text style={styles.buttonText}>Log in</Text>
+        <Text
+          style={[styles.buttonText, !isFormValid && styles.buttonTextDisabled]}
+        >
+          Log in
+        </Text>
       </TouchableOpacity>
 
       <View style={styles.orContainer}>
@@ -181,22 +193,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9FAFB",
     marginVertical: 10,
   },
-  inputPassword: { flex: 1, padding: 10 },
+  inputPassword: { flex: 1,  paddingVertical: 12,},
   eyeIcon: { padding: 10 },
   forgotPassword: {
     color: "#4338CA",
-    textAlign: "right",
     width: "100%",
     marginBottom: 10,
+    textAlign: "left",
   },
-  button: {
-    marginVertical: 15,
-    backgroundColor: "#4F46E5",
-    padding: 12,
-    borderRadius: 30,
-    alignItems: "center",
-    width: "100%",
-  },
+
   buttonWhite: {
     flexDirection: "row",
 
@@ -241,97 +246,46 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
+  button: {
+    marginVertical: 15,
+    backgroundColor: "#4F46E5",
+    padding: 12,
+    borderRadius: 30,
+    alignItems: "center",
+    width: "100%",
+  },
+  buttonDisabled: {
+    backgroundColor: "#A5B4FC",
+  },
+
+  buttonTextDisabled: {
+    color: "#E0E7FF",
+  },
+
   registerText: { marginVertical: 15, color: "#666" },
   registerButton: { marginLeft: 5, padding: 5 },
   registerButtonText: { color: "#4F46E5", fontWeight: "bold" },
+
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#D1D5DB",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    backgroundColor: "#F9FAFB",
+    width: "100%",
+    marginBottom: 10,
+  },
+  icon: {
+    
+    marginRight: 10,
+    marginLeft: 10,
+    width: 20,
+    textAlign: "center",
+  },
+  inputIcon: {
+    flex: 1,
+    paddingVertical: 12,
+  },
 });
-
-// import React, { useState } from "react";
-// import {
-//   View,
-//   Text,
-//   TextInput,
-//   TouchableOpacity,
-//   StyleSheet,
-//   Image,
-// } from "react-native";
-// import { FontAwesome } from "@expo/vector-icons";
-// import { Ionicons } from "@expo/vector-icons";
-// import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-
-// export default function Login({ setIsSignUp }) {
-//   const [showPassword, setShowPassword] = useState(false);
-//   const togglePassword = () => {
-//     setShowPassword(!showPassword);
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Log in</Text>
-
-//       <TextInput
-//         style={styles.input}
-//         placeholder="Email"
-//         keyboardType="email-address"
-//       />
-
-//       <View style={styles.passwordContainer}>
-//         <TextInput
-//           style={styles.inputPassword}
-//           placeholder="Password"
-//           secureTextEntry={!showPassword}
-//         />
-//         <TouchableOpacity
-//           style={styles.eyeIcon}
-//         >
-//           <Ionicons
-//           onPress={togglePassword}
-//             name={showPassword ? "eye" : "eye-off"}
-//             size={20}
-//             color="#666"
-//           />
-//         </TouchableOpacity>
-//       </View>
-
-//       {/* Forgot Password */}
-//       <TouchableOpacity>
-//         <Text style={styles.forgotPassword}>Forgot password?</Text>
-//       </TouchableOpacity>
-
-//       {/* Login Button */}
-//       <TouchableOpacity style={styles.button}>
-//         <Text style={styles.buttonText}>Log in</Text>
-//       </TouchableOpacity>
-
-//       {/* Or Divider */}
-//       <View style={styles.orContainer}>
-//         <View style={styles.line} />
-//         <Text style={styles.orText}>Or</Text>
-//         <View style={styles.line} />
-//       </View>
-
-//       <View style={styles.socialButtons}>
-//         <TouchableOpacity style={styles.socialButton}>
-//           <FontAwesome name="google" size={20} color="#DB4437" />
-//           <Text style={styles.socialText}>Google</Text>
-//         </TouchableOpacity>
-
-//         <TouchableOpacity style={styles.socialButton}>
-//           <FontAwesome5 name="facebook" size={20} color="#1877F2" />
-//           <Text style={styles.socialText}>Facebook</Text>
-//         </TouchableOpacity>
-//       </View>
-
-//       <View style={styles.registerContainer}>
-//         <Text style={styles.registerText}>Don't have an account?</Text>
-//       </View>
-
-//       <TouchableOpacity
-//         onPress={() => setIsSignUp(true)}
-//         style={styles.buttonWhite}
-//       >
-//         <Text style={styles.socialText}>Register</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }

@@ -7,10 +7,6 @@ import icon from "./assets/icon.png";
 function App() {
   const [isSignUp, setIsSignUp] = useState(false);
 
-  // const handleRegisterClick = () => {
-  //   setIsSignUp(true);
-  // };
-
   return (
     <div className="bg-indigo-500 ">
       <div className="min-h-screen  flex items-center justify-center p-4 rounded-3xl ">
@@ -37,8 +33,6 @@ function App() {
               just a couple of clicks and we start
             </p>
           </div>
-
-          {/* Right Side - White Section */}
 
           <div className="p-8  w-[400px]">
             {isSignUp ? (

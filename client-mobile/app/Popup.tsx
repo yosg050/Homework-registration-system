@@ -42,11 +42,7 @@ const Popup = ({ isOpen, onClose, title, message, color }) => {
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
             <Text style={styles.closeText}>×</Text>
           </TouchableOpacity>
-
-       
           <Text style={styles.title}>{title}</Text>
-
-      
           <Text style={styles.message}>{message}</Text>
         </Animated.View>
       </View>
