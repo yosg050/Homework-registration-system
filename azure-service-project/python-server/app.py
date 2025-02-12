@@ -44,11 +44,10 @@ def register():
 
         if new_user and new_user.acknowledged == True:
             try:
-                print(response)
+  
                 if response.status_code == 200:
                     nodejs_response = response.json()
-                    print("Response from Node.js:", nodejs_response)
-                    print("response: ", response)
+                    print("Response from Node.js:")
                     return (
                         jsonify(
                             {
@@ -59,8 +58,7 @@ def register():
                         200,
                     )
                 else:
-                    print("response: ", response)
-                    print("Failed to get response from Node.js:", response.status_code)
+                    print("Failed to get response from Node.js:")
                     message = "Error connecting to Node.js"
                     return (
                         jsonify(

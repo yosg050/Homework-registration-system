@@ -200,8 +200,6 @@ resource "azurerm_linux_virtual_machine" "node_server" {
       "node -v",
       "npm -v",
       "sudo npm install -g pm2",
-      "mkdir -p /home/adminuser/node-app",
-      "echo 'console.log(\"Node.js server running!\")' > /home/adminuser/node-app/server.js",
       "pm2 start /home/adminuser/node-app/server.js --name node-app",
       "pm2 save",
       "pm2 startup || true"

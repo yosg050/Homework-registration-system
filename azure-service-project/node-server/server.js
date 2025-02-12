@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const OpenAI = require('openai');
 const dotenv = require('dotenv');
 
@@ -10,7 +9,6 @@ const app = express();
 const PORT = 5000;
 console.log(PORT);
 app.use(express.json());
-app.use(cors())
 
 console.log("API Key:", process.env.OPENAI_API_KEY);
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
